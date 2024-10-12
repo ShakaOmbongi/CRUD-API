@@ -16,21 +16,26 @@ public class Animal {
     private String scientificName;
 
     @Column(nullable = false)
-    private String animalClass;
+    private String species;
 
     @Column(nullable = false)
     private String habitat;
 
+    @Column(nullable = false, name = "animal_class")
+    private String animalClass; // This field was missing
+
     private String description;
 
-    // Constructors, Getters and Setters
-    public Animal() {}
+    // Constructors, Getters, and Setters
+    public Animal() {
+    }
 
-    public Animal(String name, String scientificName, String animalClass, String habitat, String description) {
+    public Animal(String name, String scientificName, String species, String habitat, String animalClass, String description) {
         this.name = name;
         this.scientificName = scientificName;
-        this.animalClass = animalClass;
+        this.species = species;
         this.habitat = habitat;
+        this.animalClass = animalClass;
         this.description = description;
     }
 
@@ -58,12 +63,12 @@ public class Animal {
         this.scientificName = scientificName;
     }
 
-    public String getAnimalClass() {
-        return animalClass;
+    public String getSpecies() {
+        return species;
     }
 
-    public void setAnimalClass(String animalClass) {
-        this.animalClass = animalClass;
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public String getHabitat() {
@@ -72,6 +77,14 @@ public class Animal {
 
     public void setHabitat(String habitat) {
         this.habitat = habitat;
+    }
+
+    public String getAnimalClass() {
+        return animalClass;
+    }
+
+    public void setAnimalClass(String animalClass) {
+        this.animalClass = animalClass;
     }
 
     public String getDescription() {

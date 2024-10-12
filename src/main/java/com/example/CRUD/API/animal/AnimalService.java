@@ -2,6 +2,7 @@ package com.example.CRUD.API.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -26,8 +27,8 @@ public class AnimalService {
         repository.deleteById(id);
     }
 
-    public List<Animal> findByAnimalClass(String animalClass) {
-        return repository.findByAnimalClass(animalClass);
+    public List<Animal> findBySpecies(String species) {
+        return repository.findBySpecies(species);
     }
 
     public List<Animal> findByNameContaining(String name) {

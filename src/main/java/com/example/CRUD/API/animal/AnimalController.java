@@ -2,6 +2,7 @@ package com.example.CRUD.API.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -11,6 +12,10 @@ public class AnimalController {
     @Autowired
     private AnimalService service;
 
+    @Autowired
+    private AnimalApiService animalApiService;
+
+    // Local database operations
     @GetMapping
     public List<Animal> getAll() {
         return service.findAll();
@@ -37,13 +42,29 @@ public class AnimalController {
         service.deleteById(id);
     }
 
-    @GetMapping("/class/{animalClass}")
-    public List<Animal> getByClass(@PathVariable String animalClass) {
-        return service.findByAnimalClass(animalClass);
+    @GetMapping("/species/{species}")
+    public List<Animal> getBySpecies(@PathVariable String species) {
+        return service.findBySpecies(species);
     }
 
     @GetMapping("/search")
     public List<Animal> searchByName(@RequestParam String name) {
         return service.findByNameContaining(name);
+    }
+
+    // External API operations
+    @GetMapping("/external/all")
+    public String getAllAnimalsExternal() {
+        return animalApiService.getAllAnimals();
+    }
+
+    @GetMapping("/external/name/{name}")
+    public String getAnimalByNameExternal(@PathVariable String name) {
+        return animalApiService.getAnimalByName(name);
+    }
+
+    @GetMapping("/external/id/{id}")
+    public String getAnimalByIdExternal(@PathVariable String id) {
+        return animalApiService.getAnimalById(id);
     }
 }
