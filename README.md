@@ -1,4 +1,4 @@
-SAbout the Project
+About the Project
 The API is designed to manage a list of animals, each with the following details:
 
 Name: The name of the animal (required).
