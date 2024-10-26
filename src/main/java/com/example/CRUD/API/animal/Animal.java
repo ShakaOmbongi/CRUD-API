@@ -1,33 +1,26 @@
 package com.example.CRUD.API.animal;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "animals")
 public class Animal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
-
     private String species;
-
-    @Column(nullable = false)
     private String habitat;
-
     private String description;
 
-    // Constructors
+    // Default constructor
     public Animal() {}
 
+    // Constructor with fields
     public Animal(String name, String species, String habitat, String description) {
         this.name = name;
         this.species = species;
