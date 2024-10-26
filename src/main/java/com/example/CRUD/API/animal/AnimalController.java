@@ -1,70 +1,56 @@
 package com.example.CRUD.API.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/animals")
 public class AnimalController {
 
-    @Autowired
-    private AnimalService service;
+    private final AnimalService animalService;
 
     @Autowired
-    private AnimalApiService animalApiService;
+    public AnimalController(AnimalService animalService) {
+        this.animalService = animalService;
+    }
 
-    // Local database operations
-    @GetMapping
-    public List<Animal> getAll() {
-        return service.findAll();
+    @GetMapping("/all")
+    public String listAnimals(Model model) {
+        model.addAttribute("animals", animalService.findAll());
+        return "animal-list";
     }
 
     @GetMapping("/{id}")
-    public Animal getById(@PathVariable int id) {
-        return service.findById(id);
+    public String showAnimalDetails(@PathVariable Long id, Model model) {
+        Animal animal = animalService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid animal Id:" + id));
+        model.addAttribute("animal", animal);
+        return "animal-details";
     }
 
-    @PostMapping
-    public Animal create(@RequestBody Animal animal) {
-        return service.save(animal);
+    @GetMapping("/new")
+    public String showCreateForm(Model model) {
+        model.addAttribute("animal", new Animal());
+        return "animal-create";
     }
 
-    @PutMapping("/{id}")
-    public Animal update(@PathVariable int id, @RequestBody Animal animal) {
-        animal.setAnimalId(id);
-        return service.save(animal);
+    @PostMapping("/new")
+    public String createAnimal(@ModelAttribute Animal animal) {
+        animalService.save(animal);
+        return "redirect:/animals/all";
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        service.deleteById(id);
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
+        Animal animal = animalService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid animal Id:" + id));
+        model.addAttribute("animal", animal);
+        return "animal-update";
     }
 
-    @GetMapping("/species/{species}")
-    public List<Animal> getBySpecies(@PathVariable String species) {
-        return service.findBySpecies(species);
-    }
-
-    @GetMapping("/search")
-    public List<Animal> searchByName(@RequestParam String name) {
-        return service.findByNameContaining(name);
-    }
-
-    // External API operations
-    @GetMapping("/external/all")
-    public String getAllAnimalsExternal() {
-        return animalApiService.getAllAnimals();
-    }
-
-    @GetMapping("/external/name/{name}")
-    public String getAnimalByNameExternal(@PathVariable String name) {
-        return animalApiService.getAnimalByName(name);
-    }
-
-    @GetMapping("/external/id/{id}")
-    public String getAnimalByIdExternal(@PathVariable String id) {
-        return animalApiService.getAnimalById(id);
+    @PostMapping("/update")
+    public String updateAnimal(@ModelAttribute Animal animal) {
+        animalService.save(animal);
+        return "redirect:/animals/" + animal.getId();
     }
 }

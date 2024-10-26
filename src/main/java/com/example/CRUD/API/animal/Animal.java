@@ -1,6 +1,12 @@
 package com.example.CRUD.API.animal;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+
 
 @Entity
 @Table(name = "animals")
@@ -8,43 +14,35 @@ public class Animal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int animalId;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    private String scientificName;
-
-    @Column(nullable = false)
     private String species;
 
     @Column(nullable = false)
     private String habitat;
 
-    @Column(nullable = false, name = "animal_class")
-    private String animalClass; // This field was missing
-
     private String description;
 
-    // Constructors, Getters, and Setters
-    public Animal() {
-    }
+    // Constructors
+    public Animal() {}
 
-    public Animal(String name, String scientificName, String species, String habitat, String animalClass, String description) {
+    public Animal(String name, String species, String habitat, String description) {
         this.name = name;
-        this.scientificName = scientificName;
         this.species = species;
         this.habitat = habitat;
-        this.animalClass = animalClass;
         this.description = description;
     }
 
-    public int getAnimalId() {
-        return animalId;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setAnimalId(int animalId) {
-        this.animalId = animalId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -53,14 +51,6 @@ public class Animal {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getScientificName() {
-        return scientificName;
-    }
-
-    public void setScientificName(String scientificName) {
-        this.scientificName = scientificName;
     }
 
     public String getSpecies() {
@@ -77,14 +67,6 @@ public class Animal {
 
     public void setHabitat(String habitat) {
         this.habitat = habitat;
-    }
-
-    public String getAnimalClass() {
-        return animalClass;
-    }
-
-    public void setAnimalClass(String animalClass) {
-        this.animalClass = animalClass;
     }
 
     public String getDescription() {

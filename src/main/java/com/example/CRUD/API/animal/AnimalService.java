@@ -4,34 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnimalService {
 
-    @Autowired
-    private AnimalRepository repository;
+    private final AnimalRepository animalRepository;
 
-    public List<Animal> findAll() {
-        return repository.findAll();
+    @Autowired
+    public AnimalService(AnimalRepository animalRepository) {
+        this.animalRepository = animalRepository;
     }
 
-    public Animal findById(int id) {
-        return repository.findById(id).orElse(null);
+    public List<Animal> findAll() {
+        return animalRepository.findAll();
+    }
+
+    public Optional<Animal> findById(Long id) {
+        return animalRepository.findById(id);
     }
 
     public Animal save(Animal animal) {
-        return repository.save(animal);
+        return animalRepository.save(animal);
     }
 
-    public void deleteById(int id) {
-        repository.deleteById(id);
-    }
-
-    public List<Animal> findBySpecies(String species) {
-        return repository.findBySpecies(species);
-    }
-
-    public List<Animal> findByNameContaining(String name) {
-        return repository.findByNameContaining(name);
+    public void deleteById(Long id) {
+        animalRepository.deleteById(id);
     }
 }
