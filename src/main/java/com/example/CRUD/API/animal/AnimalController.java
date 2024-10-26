@@ -53,4 +53,10 @@ public class AnimalController {
         animalService.save(animal);
         return "redirect:/animals/" + animal.getId();
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteAnimal(@PathVariable Long id) {
+        animalService.deleteById(id);
+        return "redirect:/animals/all";
+    }
 }
