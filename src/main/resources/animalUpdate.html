@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Animal</title>
+  <!-- Include Bootstrap CSS and any other styles -->
+</head>
+<body>
+<h1>Update Animal</h1>
+<form th:action="@{/animals/update}" th:object="${animal}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+
+  <label for="name">Name</label>
+  <input type="text" id="name" th:field="*{name}"/>
+
+  <label for="species">Species</label>
+  <input type="text" id="species" th:field="*{species}"/>
+
+  <label for="habitat">Habitat</label>
+  <input type="text" id="habitat" th:field="*{habitat}"/>
+
+  <label for="description">Description</label>
+  <textarea id="description" th:field="*{description}"></textarea>
+
+  <button type="submit" class="btn btn-primary">Update Animal</button>
+  <a href="/animals/all" class="btn btn-secondary">Cancel</a>
+</form>
+</body>
+</html>
